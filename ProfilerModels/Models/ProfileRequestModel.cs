@@ -1,12 +1,14 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ProfilerIntegration.Entities;
-
-public class Profile
+namespace ProfilerIntegration.Models;
+public class ProfileRequestModel
 {
-    [BsonId]
-    public ObjectId Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
@@ -16,5 +18,4 @@ public class Profile
     public string State { get; set; }
     public int Zip { get; set; }
     public int CountryCode { get; set; }
-    public long? TimeStamp { get; set; }
 }

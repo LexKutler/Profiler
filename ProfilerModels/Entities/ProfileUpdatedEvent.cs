@@ -5,7 +5,7 @@ namespace ProfilerIntegration.Entities;
 public class ProfileUpdatedEvent
 {
     public ObjectId Id { get; set; }
-    public Profile PreProfile { get; set; }
-    public Profile PostProfile { get; set; }
+    public UserProfile UserProfileBefore { get; set; }
+    public UserProfile UserProfileAfter { get; set; }
     public DateTime ExpireAt { get; set; }
 }

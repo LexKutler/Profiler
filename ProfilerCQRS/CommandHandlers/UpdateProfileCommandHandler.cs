@@ -8,7 +8,7 @@ using ProfilerModels.Abstractions;
 namespace ProfilerCQRS.CommandHandlers;
 public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand, long>
 {
-    private readonly IMongoCollection<Profile> _profiles;
+    private readonly IMongoCollection<UserProfile> _profiles;
     private readonly IMongoCollection<ProfileUpdatedEvent> _profileUpdatedEvents;
     private readonly MongoClient _mongoClient;
     public UpdateProfileCommandHandler(IMongoDBService mongoDbService)
@@ -17,47 +17,44 @@ public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand,
         _mongoClient = mongoDbService.MongoClient;
         _profileUpdatedEvents = mongoDbService.ProfileUpdatedEvents;
     }
-    public async Task<long> Handle(UpdateProfileCommand request, CancellationToken cancellationToken)
+    public async Task<UpdateResult> Handle(UpdateProfileCommand request, CancellationToken cancellationToken)
     {
-        long modifiedCount;
-
+        UpdateResult updateResult;
         using var session = await _mongoClient.StartSessionAsync(cancellationToken: cancellationToken);
         session.StartTransaction();
 
         try
         {
             // Get the existing profile timestamp
-            var existingProfile = await _profiles.Find(x => x.Id == request.Profile.Id)
+            var existingProfile = await _profiles.Find(x => x.Id == request.UserProfile.Id)
                 .FirstOrDefaultAsync(cancellationToken);
 
             // Update configuration for the profile
-            var updateConfig = Builders<Profile>.Update
+            var updateConfig = Builders<UserProfile>.Update
                 .Set(profile => profile.TimeStamp, DateTime.UtcNow.Ticks);
 
-            foreach (var property in typeof(Profile).GetProperties())
+            foreach (var property in typeof(UserProfile).GetProperties())
             {
-                var value = property.GetValue(request.Profile);
+                var value = property.GetValue(request.UserProfile);
                 updateConfig = updateConfig.Set(property.Name, value);
             }
 
             // Update profile with filtering by timestamp i.e. implement optimistic locking
             // If timestamp is not matched, then it means that profile was updated by another request
-            var updateResult = await _profiles.UpdateOneAsync(
+            updateResult = await _profiles.UpdateOneAsync(
                 session,
-                profile => profile.Id == request.Profile.Id &&
+                profile => profile.Id == request.UserProfile.Id &&
                            profile.TimeStamp == existingProfile.TimeStamp,
                 updateConfig,
                 cancellationToken: cancellationToken);
-
-            modifiedCount = updateResult.ModifiedCount;
 
             if (updateResult.ModifiedCount == 1)
             {
                 var profileUpdatedEvent = new ProfileUpdatedEvent
                 {
                     Id = existingProfile.Id,
-                    PreProfile = existingProfile,
-                    PostProfile = request.Profile,
+                    UserProfileBefore = existingProfile,
+                    UserProfileAfter = request.UserProfile,
                     ExpireAt = DateTime.UtcNow.AddHours(1)
                 };
 
@@ -80,6 +77,6 @@ public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand,
             await session.AbortTransactionAsync(cancellationToken);
             throw;
         }
-        return modifiedCount;
+        return updateResult;
     }
 }

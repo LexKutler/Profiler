@@ -9,7 +9,7 @@ namespace ProfilerWebAPI.Mongo;
 public class MongoDBService: IMongoDBService
 {
     public MongoClient MongoClient { get; }
-    public IMongoCollection<Profile> Profiles { get; }
+    public IMongoCollection<UserProfile> Profiles { get; }
     public IMongoCollection<ProfileUpdatedEvent> ProfileUpdatedEvents { get; }
     private readonly IMessageBroker _broker;
 
@@ -23,15 +23,15 @@ public class MongoDBService: IMongoDBService
         database.CreateCollection("profiles");
         database.CreateCollection("profileUpdatedEvents");
 
-        var profiles = database.GetCollection<Profile>("profiles");
+        var profiles = database.GetCollection<UserProfile>("profiles");
         var profileUpdatedEvents = database.GetCollection<ProfileUpdatedEvent>("profileUpdatedEvents");
 
         WatchProfileUpdate(profileUpdatedEvents);
 
         // This would ensure that the UserName field is unique
         profiles.Indexes.CreateOne(
-            new CreateIndexModel<Profile>(
-                Builders<Profile>.IndexKeys.Ascending(x => x.UserName),
+            new CreateIndexModel<UserProfile>(
+                Builders<UserProfile>.IndexKeys.Ascending(x => x.UserName),
                 new CreateIndexOptions { Unique = true }));
 
         // Event will be deleted after 1 hour

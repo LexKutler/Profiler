@@ -1,8 +1,10 @@
-﻿using ProfilerIntegration.Entities;
+﻿using MongoDB.Bson;
+using ProfilerIntegration.Entities;
+using ProfilerIntegration.System;
 
 namespace ProfilerModels.Abstractions;
 public interface IProfileService
 {
-    Task CreateProfile(Profile profile);
-    Task UpdateProfile(Profile profile);
+    Task<UserProfile> CreateProfileAsync(UserProfile userProfile);
+    Task<ProfileUpdateResult> UpdateProfileAsync(UserProfile userProfile);
 }

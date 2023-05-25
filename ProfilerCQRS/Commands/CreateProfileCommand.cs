@@ -5,5 +5,5 @@ using ProfilerModels;
 namespace ProfilerCQRS.Commands;
 public class CreateProfileCommand: IRequest
 {
-    public Profile Profile { get; set; }
+    public UserProfile UserProfile { get; set; }
 }

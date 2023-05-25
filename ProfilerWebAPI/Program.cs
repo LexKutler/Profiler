@@ -13,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((_, lc) =>
     lc.WriteTo.Console(LogEventLevel.Warning, theme: AnsiConsoleTheme.Code));
 
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
