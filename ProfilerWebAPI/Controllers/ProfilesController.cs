@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using ProfilerIntegration.Entities;
 using ProfilerIntegration.Models;
 using ProfilerIntegration.System;
 using ProfilerModels.Abstractions;
+using ProfilerWebAPI.ProfileIO;
 using Serilog;
 
 namespace ProfilerWebAPI.Controllers
@@ -15,10 +17,15 @@ namespace ProfilerWebAPI.Controllers
     {
         private readonly IProfileService _profileService;
         private readonly IMapper _mapper;
-        public ProfilesController(IProfileService profileService, IMapper mapper)
+        private readonly string _targetPicturesPath;
+        public ProfilesController(
+            IProfileService profileService,
+            IMapper mapper,
+            IConfiguration configuration)
         {
             _profileService = profileService;
             _mapper = mapper;
+            _targetPicturesPath = configuration["TargetPicturesPath"]!;
         }
 
         [HttpPost]
@@ -43,6 +50,7 @@ namespace ProfilerWebAPI.Controllers
         }
 
         [HttpPatch("{profileId}")]
+        [ProducesResponseType(typeof(ProfileUpdateResult), StatusCodes.Status200OK)]
         public async Task<IActionResult> Patch(ObjectId profileId, [FromBody] ProfileRequestModel model)
         {
             if (!ModelState.IsValid)
@@ -62,11 +70,47 @@ namespace ProfilerWebAPI.Controllers
             return Ok(updateResult);
         }
 
-        [HttpPost("/upload")]
-
-        public async Task<IActionResult> UploadUserPicture(IFormFile picture)
+        [HttpPost("{profileId}/picture")]
+        [ProducesResponseType(typeof(ProfileUpdateResult), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UploadUserPicture(ObjectId profileId, [FromForm] ProfileImageRequest request)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (request.ProfileId == ObjectId.Empty || request.ProfileId != profileId)
+            {
+                return BadRequest("Profile id is invalid");
+            }
+
+            var profile = await _profileService.GetProfileByIdAsync(request.ProfileId);
+
+            if (profile is null)
+            {
+                return NotFound("Profile not found");
+            }
+
+            if (request.Image.Length <= 0) return BadRequest("Image is empty");
+
+            var filePath = Path.Combine(
+                _targetPicturesPath,
+                Path.GetRandomFileName());
+
+            await using var stream = System.IO.File.Create(filePath);
+            await request.Image.CopyToAsync(stream);
+
+            // If file is saved, first remove previous picture
+            if (!string.IsNullOrEmpty(profile.PicturePath))
+            {
+                System.IO.File.Delete(profile.PicturePath);
+            }
+
+            // Then update profile
+            profile.PicturePath = filePath;
+            var updateResult = await _profileService.UpdateProfileAsync(profile);
+
+            return Ok(updateResult);
         }
     }
 }

@@ -17,4 +17,5 @@ public class UserProfile
     public int Zip { get; set; }
     public int CountryCode { get; set; }
     public long? TimeStamp { get; set; }
+    public string? PicturePath { get; set; }
 }

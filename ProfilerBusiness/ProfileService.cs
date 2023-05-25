@@ -16,6 +16,16 @@ public class ProfileService: IProfileService
         _mediator = mediator;
     }
 
+    public async Task<UserProfile?> GetProfileByIdAsync(ObjectId profileId)
+    {
+        if (profileId == ObjectId.Empty)
+        {
+            throw new ArgumentException("Id is empty");
+        }
+
+        return await _mediator.Send(new GetProfileQuery { Id = profileId });
+    }
+
     public async Task<UserProfile> CreateProfileAsync(UserProfile userProfile)
     {
         if (userProfile.Id == ObjectId.Empty)

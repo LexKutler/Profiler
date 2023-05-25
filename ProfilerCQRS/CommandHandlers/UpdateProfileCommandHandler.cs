@@ -2,11 +2,10 @@
 using MongoDB.Driver;
 using ProfilerCQRS.Commands;
 using ProfilerIntegration.Entities;
-using ProfilerModels;
 using ProfilerModels.Abstractions;
 
 namespace ProfilerCQRS.CommandHandlers;
-public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand, long>
+public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand, UpdateResult>
 {
     private readonly IMongoCollection<UserProfile> _profiles;
     private readonly IMongoCollection<ProfileUpdatedEvent> _profileUpdatedEvents;
