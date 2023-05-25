@@ -1,4 +1,5 @@
-﻿using ProfilerModels;
+﻿using ProfilerIntegration.Entities;
+using ProfilerModels;
 using ProfilerModels.Abstractions;
 
 namespace ProfilerBusiness;

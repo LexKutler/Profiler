@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using MongoDB.Driver;
 using ProfilerCQRS.Commands;
+using ProfilerIntegration.Entities;
 using ProfilerModels;
 using ProfilerModels.Abstractions;
 
@@ -57,7 +58,7 @@ public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand,
                     Id = existingProfile.Id,
                     PreProfile = existingProfile,
                     PostProfile = request.Profile,
-                    TimeStamp = DateTime.UtcNow.Ticks
+                    ExpireAt = DateTime.UtcNow.AddHours(1)
                 };
 
                 await _profileUpdatedEvents.InsertOneAsync(

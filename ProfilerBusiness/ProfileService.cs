@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using MongoDB.Bson;
 using ProfilerCQRS.Commands;
+using ProfilerIntegration.Entities;
 using ProfilerModels;
 using ProfilerModels.Abstractions;
 

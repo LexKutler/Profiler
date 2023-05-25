@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using ProfilerIntegration.Entities;
 
 namespace ProfilerModels.Abstractions;
 public interface IMongoDBService

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using ProfilerIntegration.Entities;
 using ProfilerModels;
 
 namespace ProfilerCQRS.Commands;

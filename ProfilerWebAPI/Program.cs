@@ -1,25 +1,25 @@
-using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using MongoDB.Driver;
 using ProfilerBusiness;
 using ProfilerCQRS.Commands;
 using ProfilerWebAPI.Mongo;
-using ProfilerModels;
 using ProfilerModels.Abstractions;
+using ProfilerWebAPI.Middleware;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Host.UseSerilog((_, lc) =>
+    lc.WriteTo.Console(LogEventLevel.Warning, theme: AnsiConsoleTheme.Code));
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("ProfilerDB"));
 
 builder.Services.AddSingleton<IMongoDBService, MongoDBService>();
-
 builder.Services.AddScoped<IMessageBroker, MessageBroker>();
 
 builder.Services.AddMediatR(cfg =>
@@ -29,7 +29,8 @@ builder.Services.AddMediatR(cfg =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseMiddleware<GlobalErrorHandlerMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

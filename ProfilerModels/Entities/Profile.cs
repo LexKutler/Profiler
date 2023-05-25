@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace ProfilerModels;
+namespace ProfilerIntegration.Entities;
 
 public class Profile
 {

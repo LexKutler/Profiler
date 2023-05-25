@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using MongoDB.Driver;
 using ProfilerCQRS.Commands;
+using ProfilerIntegration.Entities;
 using ProfilerModels;
 using ProfilerModels.Abstractions;
 
@@ -14,14 +15,6 @@ public class CreateProfileCommandHandler : IRequestHandler<CreateProfileCommand>
     }
     public async Task Handle(CreateProfileCommand request, CancellationToken cancellationToken)
     {
-        try
-        {
-            await _profiles.InsertOneAsync(request.Profile, cancellationToken: cancellationToken);
-        }
-        catch (Exception e)
-        {
-            throw;
-        }
-        
+        await _profiles.InsertOneAsync(request.Profile, cancellationToken: cancellationToken);
     }
 }

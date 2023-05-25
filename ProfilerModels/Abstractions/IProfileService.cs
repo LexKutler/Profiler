@@ -1,4 +1,6 @@
-﻿namespace ProfilerModels.Abstractions;
+﻿using ProfilerIntegration.Entities;
+
+namespace ProfilerModels.Abstractions;
 public interface IProfileService
 {
     Task CreateProfile(Profile profile);

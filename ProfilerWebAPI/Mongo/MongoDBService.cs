@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using ProfilerBusiness;
+using ProfilerIntegration.Entities;
 using ProfilerModels;
 using ProfilerModels.Abstractions;
 
@@ -29,8 +30,15 @@ public class MongoDBService: IMongoDBService
 
         // This would ensure that the UserName field is unique
         profiles.Indexes.CreateOne(
-            new CreateIndexModel<Profile>(Builders<Profile>.IndexKeys.Ascending(x => x.UserName),
+            new CreateIndexModel<Profile>(
+                Builders<Profile>.IndexKeys.Ascending(x => x.UserName),
                 new CreateIndexOptions { Unique = true }));
+
+        // Event will be deleted after 1 hour
+        profileUpdatedEvents.Indexes.CreateOne(
+            new CreateIndexModel<ProfileUpdatedEvent>(
+                Builders<ProfileUpdatedEvent>.IndexKeys.Ascending(doc => doc.ExpireAt),
+                new CreateIndexOptions { ExpireAfter = TimeSpan.Zero }));
 
         MongoClient = mongoClient;
         Profiles = profiles;
