@@ -11,7 +11,7 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((_, lc) =>
-    lc.WriteTo.Console(LogEventLevel.Warning, theme: AnsiConsoleTheme.Code));
+    lc.WriteTo.Console(LogEventLevel.Information, theme: AnsiConsoleTheme.Code));
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
@@ -21,8 +21,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("ProfilerDB"));
 
+builder.Services.AddTransient<GlobalErrorHandlerMiddleware>();
+builder.Services.AddSingleton<IProfileService, ProfileService>();
 builder.Services.AddSingleton<IMongoDBService, MongoDBService>();
-builder.Services.AddScoped<IMessageBroker, MessageBroker>();
+builder.Services.AddSingleton<IMessageBroker, MessageBroker>();
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssemblies(

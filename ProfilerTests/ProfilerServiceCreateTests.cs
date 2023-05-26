@@ -9,11 +9,11 @@ using ProfilerIntegration.Entities;
 
 namespace TestsProfiler;
 
-public class ProfilerServiceTests
+public class ProfilerServiceCreateTests
 {
     private readonly IMapper _mapper;
     private readonly Mock<IMediator> _mediatrMock;
-    public ProfilerServiceTests(IMapper mapper)
+    public ProfilerServiceCreateTests(IMapper mapper)
     {
         _mapper = mapper;
         _mediatrMock = new Mock<IMediator>();
@@ -37,7 +37,7 @@ public class ProfilerServiceTests
                 It.IsAny<CancellationToken>()).Result)
             .Returns(profile);
 
-        var service = new ProfileService(_mediatrMock.Object);
+        var service = new ProfileService(_mediatrMock.Object, _mapper);
         var result = await service.CreateProfileAsync(profile);
 
         Assert.NotEqual(ObjectId.Empty, result.Id);
@@ -61,7 +61,7 @@ public class ProfilerServiceTests
                 It.IsAny<CancellationToken>()).Result)
             .Returns(profile);
 
-        var service = new ProfileService(_mediatrMock.Object);
+        var service = new ProfileService(_mediatrMock.Object, _mapper);
         var result = await service.CreateProfileAsync(profile);
 
         Assert.NotNull(result.TimeStamp);

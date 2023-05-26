@@ -9,7 +9,7 @@ using ProfilerWebAPI.ProfileIO;
 
 namespace ProfilerWebAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("profiles")]
     [ApiController]
     public class ProfilesController : ControllerBase
     {
@@ -50,7 +50,7 @@ namespace ProfilerWebAPI.Controllers
 
         [HttpPatch("{profileId}")]
         [ProducesResponseType(typeof(ProfileUpdateResult), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Patch(ObjectId profileId, [FromBody] ProfileRequestModel model)
+        public async Task<IActionResult> Patch([FromRoute] ObjectId profileId, [FromBody] ProfileRequestModel model)
         {
             if (!ModelState.IsValid)
             {

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TestsProfiler": {
+      "commandName": "Project",
+      "hotReloadEnabled": false
+    }
+  }
+}

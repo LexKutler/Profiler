@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using ProfilerIntegration.Entities;
 using ProfilerModels.Abstractions;
+using Serilog;
 
 namespace ProfilerWebAPI.Mongo;
 
@@ -19,13 +20,18 @@ public class MongoDBService : IMongoDBService
         var mongoClient = new MongoClient(databaseSettings.Value.ConnectionString);
         var database = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);
 
-        database.CreateCollection("profiles");
-        database.CreateCollection("profileUpdatedEvents");
+        try
+        {
+            database.CreateCollection("profiles");
+            database.CreateCollection("profileUpdatedEvents");
+        }
+        catch (MongoCommandException)
+        {
+            Log.Information("Collections present");
+        }
 
         var profiles = database.GetCollection<UserProfile>("profiles");
         var profileUpdatedEvents = database.GetCollection<ProfileUpdatedEvent>("profileUpdatedEvents");
-
-        WatchProfileUpdate(profileUpdatedEvents);
 
         // This would ensure that the UserName field is unique
         profiles.Indexes.CreateOne(
@@ -42,21 +48,5 @@ public class MongoDBService : IMongoDBService
         MongoClient = mongoClient;
         Profiles = profiles;
         ProfileUpdatedEvents = profileUpdatedEvents;
-    }
-
-    private void WatchProfileUpdate(IMongoCollection<ProfileUpdatedEvent> collection)
-    {
-        var cursor = collection.Watch();
-
-        while (cursor.MoveNext())
-        {
-            foreach (var change in cursor.Current)
-            {
-                if (change.OperationType == ChangeStreamOperationType.Insert)
-                {
-                    _broker.PublishProfileUpdatedEvent(change.FullDocument);
-                }
-            }
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using MongoDB.Bson;
 using ProfilerCQRS.Commands;
 using ProfilerCQRS.Queries;
@@ -11,10 +12,12 @@ namespace ProfilerBusiness;
 public class ProfileService : IProfileService
 {
     private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
 
-    public ProfileService(IMediator mediator)
+    public ProfileService(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator;
+        _mapper = mapper;
     }
 
     public async Task<UserProfile?> GetProfileByIdAsync(ObjectId profileId)
@@ -39,6 +42,8 @@ public class ProfileService : IProfileService
             userProfile.TimeStamp = DateTime.UtcNow.Ticks;
         }
 
+        // Mongo will throw DuplicateKey exception if profile with same id already exists
+        // Which is completely fine, cause we have global exception handler
         await _mediator.Send(new CreateProfileCommand { UserProfile = userProfile });
 
         return await _mediator.Send(new GetProfileQuery { Id = userProfile.Id });
@@ -56,8 +61,21 @@ public class ProfileService : IProfileService
             throw new ArgumentException("Profile is corrupted");
         }
 
-        var profileBefore = await _mediator.Send(new GetProfileQuery { Id = userProfile.Id })
-                            ?? throw new KeyNotFoundException("Profile not found");
+        // Update returns UpdateResult, which means it won't throw exception if profile doesn't exist
+        // So we need to check if profile exists before updating
+        var profileBefore = await _mediator.Send(new GetProfileQuery { Id = userProfile.Id });
+        if (profileBefore == null)
+        {
+            throw new KeyNotFoundException("Profile not found");
+        }
+
+        var profileBeforeRecord = _mapper.Map<UserProfileRecord>(profileBefore);
+    var profileAfterRecord = _mapper.Map<UserProfileRecord>(userProfile);
+
+    if (profileBeforeRecord.Equals(profileAfterRecord))
+    {
+        throw new InvalidOperationException("Profile update is invalid");
+    }
 
         var updateResult = await _mediator.Send(new UpdateProfileCommand { UserProfile = userProfile });
 

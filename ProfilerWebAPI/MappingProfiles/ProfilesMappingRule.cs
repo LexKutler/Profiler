@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ProfilerIntegration.Entities;
 using ProfilerIntegration.Models;
+using ProfilerIntegration.System;
 
 namespace ProfilerWebAPI.MappingProfiles;
 
@@ -15,5 +16,7 @@ public class ProfilesMappingRule : Profile
                 opt => opt.Ignore());
 
         CreateMap<UserProfile, ProfileCreatedResponse>();
+
+        CreateMap<UserProfile, UserProfileRecord>();
     }
 }
