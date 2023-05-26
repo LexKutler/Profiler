@@ -20,7 +20,7 @@ public class ProfilerServiceTests
     }
 
     [Theory]
-    [MemberData(nameof(GetData), 0)]
+    [MemberData(nameof(GetData), 0, 1)]
     public async Task CreateProfile_WithEmptyId_GenerateNewId(UserProfile profile)
     {
         // Method should first create, then get profile

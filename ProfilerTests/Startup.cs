@@ -1,12 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using ProfilerWebAPI.MappingProfiles;
 
-namespace TestsLiteras;
+namespace TestsProfiler;
 
 public static class Startup
 {
     public static void ConfigureServices(IServiceCollection services)
     {
-        services.AddAutoMapper(Assembly.Load("LiterasDataTransfer"));
+        services.AddAutoMapper(typeof(ProfilesMappingRule).Assembly);
     }
 }
