@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using ProfilerIntegration.Entities;
@@ -7,7 +6,6 @@ using ProfilerIntegration.Models;
 using ProfilerIntegration.System;
 using ProfilerModels.Abstractions;
 using ProfilerWebAPI.ProfileIO;
-using Serilog;
 
 namespace ProfilerWebAPI.Controllers
 {
@@ -18,6 +16,7 @@ namespace ProfilerWebAPI.Controllers
         private readonly IProfileService _profileService;
         private readonly IMapper _mapper;
         private readonly string _targetPicturesPath;
+
         public ProfilesController(
             IProfileService profileService,
             IMapper mapper,

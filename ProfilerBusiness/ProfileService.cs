@@ -4,13 +4,14 @@ using ProfilerCQRS.Commands;
 using ProfilerCQRS.Queries;
 using ProfilerIntegration.Entities;
 using ProfilerIntegration.System;
-using ProfilerModels;
 using ProfilerModels.Abstractions;
 
 namespace ProfilerBusiness;
-public class ProfileService: IProfileService
+
+public class ProfileService : IProfileService
 {
     private readonly IMediator _mediator;
+
     public ProfileService(IMediator mediator)
     {
         _mediator = mediator;
@@ -55,7 +56,7 @@ public class ProfileService: IProfileService
             throw new ArgumentException("Profile is corrupted");
         }
 
-        var profileBefore = await _mediator.Send(new GetProfileQuery { Id = userProfile.Id }) 
+        var profileBefore = await _mediator.Send(new GetProfileQuery { Id = userProfile.Id })
                             ?? throw new KeyNotFoundException("Profile not found");
 
         var updateResult = await _mediator.Send(new UpdateProfileCommand { UserProfile = userProfile });

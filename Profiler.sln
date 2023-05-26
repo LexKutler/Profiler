@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfilerWebAPI", "ProfilerW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfilerCQRS", "ProfilerCQRS\ProfilerCQRS.csproj", "{3FB25B66-646D-4467-A315-BBAF61B9E7FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfilerBusiness", "ProfilerBusiness\ProfilerBusiness.csproj", "{58ABAD19-FB7D-48A6-B2A1-CFA5CF683BEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfilerBusiness", "ProfilerBusiness\ProfilerBusiness.csproj", "{58ABAD19-FB7D-48A6-B2A1-CFA5CF683BEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfilerIntegration", "ProfilerModels\ProfilerIntegration.csproj", "{9F120412-99B0-468D-8C9B-1E9FEDF993F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfilerIntegration", "ProfilerModels\ProfilerIntegration.csproj", "{9F120412-99B0-468D-8C9B-1E9FEDF993F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestsProfiler", "ProfilerTests\TestsProfiler.csproj", "{1AB3790B-22BB-4696-A1C1-949BE9B28C75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9F120412-99B0-468D-8C9B-1E9FEDF993F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F120412-99B0-468D-8C9B-1E9FEDF993F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F120412-99B0-468D-8C9B-1E9FEDF993F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AB3790B-22BB-4696-A1C1-949BE9B28C75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AB3790B-22BB-4696-A1C1-949BE9B28C75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AB3790B-22BB-4696-A1C1-949BE9B28C75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AB3790B-22BB-4696-A1C1-949BE9B28C75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

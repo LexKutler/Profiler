@@ -1,12 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace ProfilerIntegration.Models;
 
-namespace ProfilerIntegration.Models;
 public class ProfileRequestModel
 {
     public string FirstName { get; set; }

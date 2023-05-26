@@ -3,9 +3,12 @@ using ProfilerIntegration.Entities;
 using ProfilerIntegration.System;
 
 namespace ProfilerModels.Abstractions;
+
 public interface IProfileService
 {
     Task<UserProfile?> GetProfileByIdAsync(ObjectId profileId);
+
     Task<UserProfile> CreateProfileAsync(UserProfile userProfile);
+
     Task<ProfileUpdateResult> UpdateProfileAsync(UserProfile userProfile);
 }

@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 
 namespace ProfilerWebAPI.ProfileIO;
+
 public class ProfileImageRequest
 {
     public ObjectId ProfileId { get; set; }

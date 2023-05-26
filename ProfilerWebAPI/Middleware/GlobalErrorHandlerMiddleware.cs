@@ -2,7 +2,8 @@
 using Serilog;
 
 namespace ProfilerWebAPI.Middleware;
-public class GlobalErrorHandlerMiddleware: IMiddleware
+
+public class GlobalErrorHandlerMiddleware : IMiddleware
 {
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {

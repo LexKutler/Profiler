@@ -5,17 +5,20 @@ using ProfilerIntegration.Entities;
 using ProfilerModels.Abstractions;
 
 namespace ProfilerCQRS.CommandHandlers;
+
 public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand, UpdateResult>
 {
     private readonly IMongoCollection<UserProfile> _profiles;
     private readonly IMongoCollection<ProfileUpdatedEvent> _profileUpdatedEvents;
     private readonly MongoClient _mongoClient;
+
     public UpdateProfileCommandHandler(IMongoDBService mongoDbService)
     {
         _profiles = mongoDbService.Profiles;
         _mongoClient = mongoDbService.MongoClient;
         _profileUpdatedEvents = mongoDbService.ProfileUpdatedEvents;
     }
+
     public async Task<UpdateResult> Handle(UpdateProfileCommand request, CancellationToken cancellationToken)
     {
         UpdateResult updateResult;

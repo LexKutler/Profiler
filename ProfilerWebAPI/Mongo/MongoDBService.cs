@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using ProfilerBusiness;
 using ProfilerIntegration.Entities;
-using ProfilerModels;
 using ProfilerModels.Abstractions;
 
 namespace ProfilerWebAPI.Mongo;
-public class MongoDBService: IMongoDBService
+
+public class MongoDBService : IMongoDBService
 {
     public MongoClient MongoClient { get; }
     public IMongoCollection<UserProfile> Profiles { get; }

@@ -2,6 +2,7 @@
 using ProfilerIntegration.Entities;
 
 namespace ProfilerModels.Abstractions;
+
 public interface IMongoDBService
 {
     MongoClient MongoClient { get; }

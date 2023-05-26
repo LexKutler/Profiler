@@ -3,7 +3,8 @@ using ProfilerIntegration.Entities;
 using ProfilerIntegration.Models;
 
 namespace ProfilerWebAPI.MappingProfiles;
-public class ProfilesMappingRule: Profile
+
+public class ProfilesMappingRule : Profile
 {
     public ProfilesMappingRule()
     {

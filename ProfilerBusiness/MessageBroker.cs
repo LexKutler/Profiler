@@ -1,9 +1,9 @@
 ﻿using ProfilerIntegration.Entities;
-using ProfilerModels;
 using ProfilerModels.Abstractions;
 
 namespace ProfilerBusiness;
-public class MessageBroker: IMessageBroker
+
+public class MessageBroker : IMessageBroker
 {
     public Task PublishProfileUpdatedEvent(ProfileUpdatedEvent profileUpdatedEvent)
     {

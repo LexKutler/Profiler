@@ -1,12 +1,12 @@
-using System.Reflection;
 using ProfilerBusiness;
 using ProfilerCQRS.Commands;
-using ProfilerWebAPI.Mongo;
 using ProfilerModels.Abstractions;
 using ProfilerWebAPI.Middleware;
+using ProfilerWebAPI.Mongo;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 

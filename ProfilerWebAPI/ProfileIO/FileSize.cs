@@ -6,6 +6,7 @@ namespace ProfilerWebAPI.ProfileIO;
 public class FileSize : ValidationAttribute
 {
     private readonly int _maxFileSize;
+
     public FileSize(int maxSize)
     {
         _maxFileSize = maxSize;
