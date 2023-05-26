@@ -6,16 +6,16 @@ using ProfilerModels.Abstractions;
 
 namespace ProfilerCQRS.QueryHandlers;
 
-public class GetProfileByIdQueryHandler : IRequestHandler<GetProfileQuery, UserProfile>
+public class ProfileByIdQueryHandler : IRequestHandler<ProfileQuery, UserProfile>
 {
     private readonly IMongoCollection<UserProfile> _profiles;
 
-    public GetProfileByIdQueryHandler(IMongoDBService mongoDbService)
+    public ProfileByIdQueryHandler(IMongoDBService mongoDbService)
     {
         _profiles = mongoDbService.Profiles;
     }
 
-    public async Task<UserProfile> Handle(GetProfileQuery request, CancellationToken cancellationToken)
+    public async Task<UserProfile> Handle(ProfileQuery request, CancellationToken cancellationToken)
     {
         return await _profiles.Find(profile => profile.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
     }

@@ -21,6 +21,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("ProfilerDB"));
 
+builder.Services.AddHostedService<BackgroundEventManager>();
 builder.Services.AddTransient<GlobalErrorHandlerMiddleware>();
 builder.Services.AddSingleton<IProfileService, ProfileService>();
 builder.Services.AddSingleton<IMongoDBService, MongoDBService>();

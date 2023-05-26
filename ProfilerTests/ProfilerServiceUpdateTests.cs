@@ -31,7 +31,7 @@ public class ProfilerServiceUpdateTests
             .Returns(It.IsAny<UpdateResult>());
 
         _mediatrMock.SetupSequence(mediator => mediator.Send(
-                It.IsAny<GetProfileQuery>(),
+                It.IsAny<ProfileQuery>(),
                 It.IsAny<CancellationToken>()).Result)
             .Returns(profileBefore)
             .Returns(profileAfter);
@@ -50,7 +50,7 @@ public class ProfilerServiceUpdateTests
             .Returns(It.IsAny<UpdateResult>());
 
         _mediatrMock.SetupSequence(mediator => mediator.Send(
-                It.IsAny<GetProfileQuery>(),
+                It.IsAny<ProfileQuery>(),
                 It.IsAny<CancellationToken>()).Result)
             .Returns(profileBefore)
             .Returns(profileAfter);
@@ -69,7 +69,7 @@ public class ProfilerServiceUpdateTests
             .Returns(It.IsAny<UpdateResult>());
 
         _mediatrMock.SetupSequence(mediator => mediator.Send(
-                It.IsAny<GetProfileQuery>(),
+                It.IsAny<ProfileQuery>(),
                 It.IsAny<CancellationToken>()).Result)
             .Throws<KeyNotFoundException>()
             .Returns(profileAfter);
@@ -88,7 +88,7 @@ public class ProfilerServiceUpdateTests
             .Returns(It.IsAny<UpdateResult>());
 
         _mediatrMock.SetupSequence(mediator => mediator.Send(
-                It.IsAny<GetProfileQuery>(),
+                It.IsAny<ProfileQuery>(),
                 It.IsAny<CancellationToken>()).Result)
             .Returns(profileBefore)
             .Returns(profileAfter);
@@ -107,7 +107,7 @@ public class ProfilerServiceUpdateTests
             .Throws<InvalidOperationException>();
 
         _mediatrMock.SetupSequence(mediator => mediator.Send(
-                It.IsAny<GetProfileQuery>(),
+                It.IsAny<ProfileQuery>(),
                 It.IsAny<CancellationToken>()).Result)
             .Returns(profileBefore)
             .Returns(profileAfter);
@@ -126,7 +126,7 @@ public class ProfilerServiceUpdateTests
             .Returns(new UpdateResultAdapter());
 
         _mediatrMock.SetupSequence(mediator => mediator.Send(
-                It.IsAny<GetProfileQuery>(),
+                It.IsAny<ProfileQuery>(),
                 It.IsAny<CancellationToken>()).Result)
             .Returns(profileBefore)
             .Returns(profileAfter);

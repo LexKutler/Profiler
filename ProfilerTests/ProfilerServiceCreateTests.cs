@@ -33,7 +33,7 @@ public class ProfilerServiceCreateTests
 
         _mediatrMock.InSequence(sequence)
             .Setup(mediator => mediator.Send(
-                It.IsAny<GetProfileQuery>(),
+                It.IsAny<ProfileQuery>(),
                 It.IsAny<CancellationToken>()).Result)
             .Returns(profile);
 
@@ -57,7 +57,7 @@ public class ProfilerServiceCreateTests
 
         _mediatrMock.InSequence(sequence)
             .Setup(mediator => mediator.Send(
-                It.IsAny<GetProfileQuery>(),
+                It.IsAny<ProfileQuery>(),
                 It.IsAny<CancellationToken>()).Result)
             .Returns(profile);
 

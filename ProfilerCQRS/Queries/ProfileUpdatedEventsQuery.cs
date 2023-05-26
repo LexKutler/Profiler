@@ -4,7 +4,6 @@ using ProfilerIntegration.Entities;
 
 namespace ProfilerCQRS.Queries;
 
-public class GetProfileQuery : IRequest<UserProfile>
+public class ProfileUpdatedEventsQuery : IRequest<List<ProfileUpdatedEvent>>
 {
-    public ObjectId Id { get; set; }
 }

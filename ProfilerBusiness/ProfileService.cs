@@ -27,7 +27,7 @@ public class ProfileService : IProfileService
             throw new ArgumentException("Id is empty");
         }
 
-        return await _mediator.Send(new GetProfileQuery { Id = profileId });
+        return await _mediator.Send(new ProfileQuery { Id = profileId });
     }
 
     public async Task<UserProfile> CreateProfileAsync(UserProfile userProfile)
@@ -46,7 +46,7 @@ public class ProfileService : IProfileService
         // Which is completely fine, cause we have global exception handler
         await _mediator.Send(new CreateProfileCommand { UserProfile = userProfile });
 
-        return await _mediator.Send(new GetProfileQuery { Id = userProfile.Id });
+        return await _mediator.Send(new ProfileQuery { Id = userProfile.Id });
     }
 
     public async Task<ProfileUpdateResult> UpdateProfileAsync(UserProfile userProfile)
@@ -63,7 +63,7 @@ public class ProfileService : IProfileService
 
         // Update returns UpdateResult, which means it won't throw exception if profile doesn't exist
         // So we need to check if profile exists before updating
-        var profileBefore = await _mediator.Send(new GetProfileQuery { Id = userProfile.Id });
+        var profileBefore = await _mediator.Send(new ProfileQuery { Id = userProfile.Id });
         if (profileBefore == null)
         {
             throw new KeyNotFoundException("Profile not found");
@@ -84,7 +84,7 @@ public class ProfileService : IProfileService
             throw new InvalidOperationException("Profile not modified");
         }
 
-        var profileAfter = await _mediator.Send(new GetProfileQuery { Id = userProfile.Id });
+        var profileAfter = await _mediator.Send(new ProfileQuery { Id = userProfile.Id });
 
         return new ProfileUpdateResult
         {

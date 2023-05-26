@@ -1,13 +1,26 @@
-﻿using ProfilerIntegration.Entities;
+﻿using MediatR;
+using Microsoft.Extensions.Hosting;
+using ProfilerCQRS.Commands;
+using ProfilerIntegration.Entities;
 using ProfilerModels.Abstractions;
+using Serilog;
 
 namespace ProfilerBusiness;
 
 public class MessageBroker : IMessageBroker
 {
-    public Task PublishProfileUpdatedEvent(ProfileUpdatedEvent profileUpdatedEvent)
+    private readonly IMediator _mediator;
+    public MessageBroker(IMediator mediator)
     {
-        // Send & log the event
-        return Task.CompletedTask;
+        _mediator = mediator;
+    }
+
+    public async Task PublishProfileUpdatedEvent()
+    {
+        var events = await _mediator.Send(new SeekAndDestroyUpdateEventsCommand());
+
+        // Send events to MQTT here if needed
+
+        await Task.CompletedTask;
     }
 }

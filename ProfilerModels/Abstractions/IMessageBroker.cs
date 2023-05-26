@@ -4,5 +4,10 @@ namespace ProfilerModels.Abstractions;
 
 public interface IMessageBroker
 {
-    Task PublishProfileUpdatedEvent(ProfileUpdatedEvent profileUpdatedEvent);
+    /// <summary>
+    /// This method would seek and destroy events.
+    /// It is possible to add MQTT or other message brokers later.
+    /// </summary>
+    /// <returns></returns>
+    Task PublishProfileUpdatedEvent();
 }
