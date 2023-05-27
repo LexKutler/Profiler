@@ -3,6 +3,9 @@ using Serilog;
 
 namespace ProfilerWebAPI.Middleware;
 
+/// <summary>
+/// Simple global exception handler. Logs errors and unifies server error responses to <see cref="ErrorModel"/>
+/// </summary>
 public class GlobalErrorHandlerMiddleware : IMiddleware
 {
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)

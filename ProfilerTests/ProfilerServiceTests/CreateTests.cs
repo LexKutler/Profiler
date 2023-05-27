@@ -7,13 +7,13 @@ using ProfilerCQRS.Commands;
 using ProfilerCQRS.Queries;
 using ProfilerIntegration.Entities;
 
-namespace TestsProfiler;
+namespace TestsProfiler.ProfilerServiceTests;
 
-public class ProfilerServiceCreateTests
+public class CreateTests
 {
     private readonly IMapper _mapper;
     private readonly Mock<IMediator> _mediatrMock;
-    public ProfilerServiceCreateTests(IMapper mapper)
+    public CreateTests(IMapper mapper)
     {
         _mapper = mapper;
         _mediatrMock = new Mock<IMediator>();

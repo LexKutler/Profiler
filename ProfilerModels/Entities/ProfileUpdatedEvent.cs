@@ -7,5 +7,5 @@ public class ProfileUpdatedEvent
     public ObjectId Id { get; set; }
     public UserProfile UserProfileBefore { get; set; }
     public UserProfile UserProfileAfter { get; set; }
-    public DateTime ExpireAt { get; set; }
+    public long EventHappened { get; set; }
 }

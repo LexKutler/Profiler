@@ -57,7 +57,7 @@ public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand,
                     Id = existingProfile.Id,
                     UserProfileBefore = existingProfile,
                     UserProfileAfter = request.UserProfile,
-                    ExpireAt = DateTime.UtcNow.AddHours(1)
+                    EventHappened = DateTime.UtcNow.Ticks
                 };
 
                 await _profileUpdatedEvents.InsertOneAsync(

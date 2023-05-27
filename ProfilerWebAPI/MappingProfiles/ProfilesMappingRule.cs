@@ -15,8 +15,12 @@ public class ProfilesMappingRule : Profile
             .ForMember(prof => prof.TimeStamp,
                 opt => opt.Ignore());
 
-        CreateMap<UserProfile, ProfileCreatedResponse>();
+        CreateMap<UserProfile, ProfileResponse>()
+            .ForMember(resp => resp.Id,
+                opt => opt.MapFrom(prof => prof.Id.ToString()));
 
         CreateMap<UserProfile, UserProfileRecord>();
+
+        CreateMap<ProfileResponse, UserProfileRecord>();
     }
 }

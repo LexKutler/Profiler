@@ -2,9 +2,9 @@
 
 namespace ProfilerIntegration.Models;
 
-public class ProfileCreatedResponse
+public class ProfileResponse
 {
-    public ObjectId Id { get; set; }
+    public string Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }

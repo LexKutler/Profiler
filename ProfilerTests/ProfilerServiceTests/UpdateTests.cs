@@ -9,7 +9,7 @@ using ProfilerCQRS.Queries;
 using ProfilerIntegration.Entities;
 using ProfilerIntegration.System;
 
-namespace TestsProfiler;
+namespace TestsProfiler.ProfilerServiceTests;
 
 public class ProfilerServiceUpdateTests
 {
@@ -41,26 +41,7 @@ public class ProfilerServiceUpdateTests
     }
 
     [Theory]
-    [MemberData(nameof(GetData), 1, 2)]
-    public async Task UpdateProfile_WithNullOrZeroTimeStamp_ThrowsArgumentException(UserProfile profileBefore, UserProfile profileAfter)
-    {
-        _mediatrMock.Setup(mediator => mediator.Send(
-                It.IsAny<UpdateProfileCommand>(),
-                It.IsAny<CancellationToken>()).Result)
-            .Returns(It.IsAny<UpdateResult>());
-
-        _mediatrMock.SetupSequence(mediator => mediator.Send(
-                It.IsAny<ProfileQuery>(),
-                It.IsAny<CancellationToken>()).Result)
-            .Returns(profileBefore)
-            .Returns(profileAfter);
-
-        var service = new ProfileService(_mediatrMock.Object, _mapper);
-        await Assert.ThrowsAsync<ArgumentException>(async () => await service.UpdateProfileAsync(profileAfter));
-    }
-
-    [Theory]
-    [MemberData(nameof(GetData), 3, 1)]
+    [MemberData(nameof(GetData), 1, 1)]
     public async Task UpdateProfile_OnNonExistingDocument_ThrowsKeyNotFoundException(UserProfile profileAfter)
     {
         _mediatrMock.Setup(mediator => mediator.Send(
@@ -79,7 +60,7 @@ public class ProfilerServiceUpdateTests
     }
 
     [Theory]
-    [MemberData(nameof(GetData), 4, 1)]
+    [MemberData(nameof(GetData), 2, 1)]
     public async Task UpdateProfile_WithIdenticalProfiles_ThrowsInvalidOperationException(UserProfile profileBefore, UserProfile profileAfter)
     {
         _mediatrMock.Setup(mediator => mediator.Send(
@@ -98,7 +79,7 @@ public class ProfilerServiceUpdateTests
     }
 
     [Theory]
-    [MemberData(nameof(GetData), 5, 1)]
+    [MemberData(nameof(GetData), 3, 1)]
     public async Task UpdateProfile_WithoutChanges_ThrowsInvalidOperationException(UserProfile profileBefore, UserProfile profileAfter)
     {
         _mediatrMock.Setup(mediator => mediator.Send(
@@ -117,7 +98,7 @@ public class ProfilerServiceUpdateTests
     }
 
     [Theory]
-    [MemberData(nameof(GetData), 5, 1)]
+    [MemberData(nameof(GetData), 3, 1)]
     public async Task UpdateProfile_ReturnsBeforeAndAfter(UserProfile profileBefore, UserProfile profileAfter)
     {
         _mediatrMock.Setup(mediator => mediator.Send(
@@ -159,27 +140,7 @@ public class ProfilerServiceUpdateTests
                 }
             },
 
-            // 2. Profile with null timestamp
-            new object[]
-            {
-                new UserProfile(),
-                new UserProfile()
-                {
-                    TimeStamp = null
-                }
-            },
-
-            // 2. Profile with timestamp equal to 0
-            new object[]
-            {
-                new UserProfile(),
-                new UserProfile()
-                {
-                    TimeStamp = 0
-                }
-            },
-
-            // 3. Update non-existing document
+            // 2. Update non-existing document
             new object[]
             {
                 new UserProfile()
@@ -190,7 +151,7 @@ public class ProfilerServiceUpdateTests
                 },
             },
 
-            // 4. Identical profiles
+            // 3. Identical profiles
             new object[]
             {
                 new UserProfile()
@@ -205,7 +166,7 @@ public class ProfilerServiceUpdateTests
                 }
             },
 
-            // 5. Dummy profiles
+            // 4. Dummy profiles
             new object[]
             {
                 new UserProfile()

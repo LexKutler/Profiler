@@ -4,11 +4,15 @@ using MongoDB.Bson;
 using ProfilerCQRS.Commands;
 using ProfilerCQRS.Queries;
 using ProfilerIntegration.Entities;
+using ProfilerIntegration.Models;
 using ProfilerIntegration.System;
 using ProfilerModels.Abstractions;
 
 namespace ProfilerBusiness;
 
+/// <summary>
+/// Implementation of <see cref="IProfileService"/>
+/// </summary>
 public class ProfileService : IProfileService
 {
     private readonly IMediator _mediator;
@@ -56,11 +60,6 @@ public class ProfileService : IProfileService
             throw new ArgumentException("Id is invalid");
         }
 
-        if (userProfile.TimeStamp is null or 0)
-        {
-            throw new ArgumentException("Profile is corrupted");
-        }
-
         // Update returns UpdateResult, which means it won't throw exception if profile doesn't exist
         // So we need to check if profile exists before updating
         var profileBefore = await _mediator.Send(new ProfileQuery { Id = userProfile.Id });
@@ -88,8 +87,8 @@ public class ProfileService : IProfileService
 
         return new ProfileUpdateResult
         {
-            ProfileBefore = profileBefore,
-            ProfileAfter = profileAfter
+            ProfileBefore = _mapper.Map<ProfileResponse>(profileBefore),
+            ProfileAfter = _mapper.Map<ProfileResponse>(profileAfter)
         };
     }
 }

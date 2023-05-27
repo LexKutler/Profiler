@@ -4,6 +4,10 @@ using ProfilerModels.Abstractions;
 using Serilog;
 
 namespace ProfilerBusiness;
+/// <summary>
+/// Class is derived from <see cref="BackgroundService"/>.
+/// It is used as a recurring manager to <see cref="IMessageBroker"/>.
+/// </summary>
 public class BackgroundEventManager : BackgroundService
 {
     private readonly IServiceProvider _services;
@@ -21,9 +25,21 @@ public class BackgroundEventManager : BackgroundService
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            await messageBroker.PublishProfileUpdatedEvent();
+            var listOfEvents = await messageBroker.PublishProfileUpdatedEvent();
 
-            Log.Information("Outbox checked");
+            if (listOfEvents.Any())
+            {
+                foreach (var profileUpdatedEvent in listOfEvents)
+                {
+                    Log.Information(
+                        $"Update event for {profileUpdatedEvent.UserProfileAfter.Id} happened");
+                }
+                Log.Information($"Outbox checked for {listOfEvents.Count} events");
+            }
+            else
+            {
+                Log.Information("Outbox checked. No events found so far");
+            }
 
             await Task.Delay(10000, stoppingToken);
         }

@@ -6,7 +6,8 @@ using ProfilerModels.Abstractions;
 
 namespace ProfilerCQRS.CommandHandlers;
 
-public class SeekAndDestroyUpdateEventsCommandHandler : IRequestHandler<SeekAndDestroyUpdateEventsCommand, List<ProfileUpdatedEvent>?>
+public class SeekAndDestroyUpdateEventsCommandHandler : 
+    IRequestHandler<SeekAndDestroyUpdateEventsCommand, List<ProfileUpdatedEvent>>
 {
     private readonly IMongoCollection<ProfileUpdatedEvent> _profileUpdatedEvents;
     private readonly MongoClient _mongoClient;
@@ -17,7 +18,7 @@ public class SeekAndDestroyUpdateEventsCommandHandler : IRequestHandler<SeekAndD
         _profileUpdatedEvents = mongoDbService.ProfileUpdatedEvents;
     }
 
-    public async Task<List<ProfileUpdatedEvent>?> Handle(SeekAndDestroyUpdateEventsCommand request,
+    public async Task<List<ProfileUpdatedEvent>> Handle(SeekAndDestroyUpdateEventsCommand request,
         CancellationToken cancellationToken)
     {
         // Avoid any transaction if there are no events
@@ -27,7 +28,7 @@ public class SeekAndDestroyUpdateEventsCommandHandler : IRequestHandler<SeekAndD
 
         if (eventsPresentCount == 0)
         {
-            return null;
+            return new List<ProfileUpdatedEvent>();
         }
 
         using var session = await _mongoClient.StartSessionAsync(cancellationToken: cancellationToken);
@@ -39,13 +40,13 @@ public class SeekAndDestroyUpdateEventsCommandHandler : IRequestHandler<SeekAndD
                 .Find(Builders<ProfileUpdatedEvent>.Filter.Empty)
                 .ToListAsync(cancellationToken: cancellationToken);
 
+            // This move has a potential to save some time under higher loads
+            var existingEventsHashSet = new HashSet<ProfileUpdatedEvent>(existingEvents);
+
             // Delete each one of them
-            foreach(var profileUpdatedEvent in existingEvents)
-            {
-                await _profileUpdatedEvents.DeleteOneAsync(
-                    profile => profile.Id == profileUpdatedEvent.Id,
-                    cancellationToken: cancellationToken);
-            }
+            await _profileUpdatedEvents.DeleteManyAsync(
+                profileUpdatedEvent => existingEventsHashSet.Contains(profileUpdatedEvent),
+                cancellationToken: cancellationToken);
 
             // Commit & return
             await session.CommitTransactionAsync(cancellationToken: cancellationToken);

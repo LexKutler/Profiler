@@ -1,9 +1,11 @@
-﻿namespace ProfilerWebAPI.Mongo
-{
-    public class DatabaseSettings
-    {
-        public string ConnectionString { get; set; } = null!;
+﻿namespace ProfilerWebAPI.Mongo;
 
-        public string DatabaseName { get; set; } = null!;
-    }
+/// <summary>
+/// Class repeats appsettings database section
+/// </summary>
+public class DatabaseSettings
+{
+    public string ConnectionString { get; set; } = null!;
+
+    public string DatabaseName { get; set; } = null!;
 }

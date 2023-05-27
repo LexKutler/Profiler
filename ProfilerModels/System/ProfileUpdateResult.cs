@@ -1,9 +1,10 @@
 ﻿using ProfilerIntegration.Entities;
+using ProfilerIntegration.Models;
 
 namespace ProfilerIntegration.System;
 
 public class ProfileUpdateResult
 {
-    public UserProfile ProfileBefore { get; set; }
-    public UserProfile ProfileAfter { get; set; }
+    public ProfileResponse ProfileBefore { get; set; }
+    public ProfileResponse ProfileAfter { get; set; }
 }

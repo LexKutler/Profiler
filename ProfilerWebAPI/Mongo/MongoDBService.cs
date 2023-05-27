@@ -6,6 +6,9 @@ using Serilog;
 
 namespace ProfilerWebAPI.Mongo;
 
+/// <summary>
+/// Implementation of <see cref="IMongoDBService"/>
+/// </summary>
 public class MongoDBService : IMongoDBService
 {
     public MongoClient MongoClient { get; }
@@ -38,12 +41,6 @@ public class MongoDBService : IMongoDBService
             new CreateIndexModel<UserProfile>(
                 Builders<UserProfile>.IndexKeys.Ascending(x => x.UserName),
                 new CreateIndexOptions { Unique = true }));
-
-        // Event will be deleted after 1 hour
-        profileUpdatedEvents.Indexes.CreateOne(
-            new CreateIndexModel<ProfileUpdatedEvent>(
-                Builders<ProfileUpdatedEvent>.IndexKeys.Ascending(doc => doc.ExpireAt),
-                new CreateIndexOptions { ExpireAfter = TimeSpan.Zero }));
 
         MongoClient = mongoClient;
         Profiles = profiles;
