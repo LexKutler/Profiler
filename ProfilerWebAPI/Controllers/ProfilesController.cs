@@ -132,6 +132,11 @@ namespace ProfilerWebAPI.Controllers
                 _targetPicturesPath,
                 newFileName);
 
+            if (!Directory.Exists(_targetPicturesPath))
+            {
+                Directory.CreateDirectory(_targetPicturesPath);
+            }
+
             await using var stream = System.IO.File.Create(filePath);
             await picture.CopyToAsync(stream);
 
