@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 
-namespace ProfilerIntegration.Entities;
+namespace ProfilerIntegrations.Entities;
 
 public class ProfileUpdatedEvent
 {

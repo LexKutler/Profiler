@@ -5,7 +5,7 @@ using Moq;
 using ProfilerBusiness;
 using ProfilerCQRS.Commands;
 using ProfilerCQRS.Queries;
-using ProfilerIntegration.Entities;
+using ProfilerIntegrations.Entities;
 
 namespace TestsProfiler.ProfilerServiceTests;
 
@@ -13,6 +13,7 @@ public class CreateTests
 {
     private readonly IMapper _mapper;
     private readonly Mock<IMediator> _mediatrMock;
+
     public CreateTests(IMapper mapper)
     {
         _mapper = mapper;

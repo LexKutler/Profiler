@@ -3,10 +3,10 @@ using MediatR;
 using MongoDB.Bson;
 using ProfilerCQRS.Commands;
 using ProfilerCQRS.Queries;
-using ProfilerIntegration.Entities;
-using ProfilerIntegration.Models;
-using ProfilerIntegration.System;
-using ProfilerModels.Abstractions;
+using ProfilerIntegrations.Abstractions;
+using ProfilerIntegrations.Entities;
+using ProfilerIntegrations.Models;
+using ProfilerIntegrations.System;
 
 namespace ProfilerBusiness;
 
@@ -69,12 +69,12 @@ public class ProfileService : IProfileService
         }
 
         var profileBeforeRecord = _mapper.Map<UserProfileRecord>(profileBefore);
-    var profileAfterRecord = _mapper.Map<UserProfileRecord>(userProfile);
+        var profileAfterRecord = _mapper.Map<UserProfileRecord>(userProfile);
 
-    if (profileBeforeRecord.Equals(profileAfterRecord))
-    {
-        throw new InvalidOperationException("Profile update is invalid");
-    }
+        if (profileBeforeRecord.Equals(profileAfterRecord))
+        {
+            throw new InvalidOperationException("Profile update is invalid");
+        }
 
         var updateResult = await _mediator.Send(new UpdateProfileCommand { UserProfile = userProfile });
 

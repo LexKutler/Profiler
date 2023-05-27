@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
-using ProfilerIntegration.Entities;
-using ProfilerIntegration.Models;
-using ProfilerIntegration.System;
-using ProfilerModels.Abstractions;
-using ProfilerWebAPI.ProfileIO;
+using ProfilerIntegrations.Abstractions;
+using ProfilerIntegrations.Entities;
+using ProfilerIntegrations.Models;
+using ProfilerIntegrations.System;
 
 namespace ProfilerWebAPI.Controllers
 {

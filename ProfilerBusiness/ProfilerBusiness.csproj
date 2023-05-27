@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProfilerCQRS\ProfilerCQRS.csproj" />
-    <ProjectReference Include="..\ProfilerModels\ProfilerIntegration.csproj" />
+    <ProjectReference Include="..\ProfilerIntegrations\ProfilerIntegrations.csproj" />
   </ItemGroup>
 
 </Project>

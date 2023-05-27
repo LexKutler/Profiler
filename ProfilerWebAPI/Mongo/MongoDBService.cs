@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using ProfilerIntegration.Entities;
-using ProfilerModels.Abstractions;
+using ProfilerIntegrations.Abstractions;
+using ProfilerIntegrations.Entities;
 using Serilog;
 
 namespace ProfilerWebAPI.Mongo;

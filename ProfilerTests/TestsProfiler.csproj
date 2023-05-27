@@ -29,7 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ProfilerBusiness\ProfilerBusiness.csproj" />
     <ProjectReference Include="..\ProfilerCQRS\ProfilerCQRS.csproj" />
-    <ProjectReference Include="..\ProfilerModels\ProfilerIntegration.csproj" />
+    <ProjectReference Include="..\ProfilerIntegrations\ProfilerIntegrations.csproj" />
     <ProjectReference Include="..\ProfilerWebAPI\ProfilerWebAPI.csproj" />
   </ItemGroup>
 

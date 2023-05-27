@@ -1,6 +1,6 @@
 using ProfilerBusiness;
 using ProfilerCQRS.Commands;
-using ProfilerModels.Abstractions;
+using ProfilerIntegrations.Abstractions;
 using ProfilerWebAPI.Middleware;
 using ProfilerWebAPI.Mongo;
 using Serilog;
