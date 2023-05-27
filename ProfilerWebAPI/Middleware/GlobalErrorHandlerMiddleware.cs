@@ -1,4 +1,4 @@
-﻿using ProfilerIntegration.System;
+﻿using ProfilerIntegrations.System;
 using Serilog;
 
 namespace ProfilerWebAPI.Middleware;

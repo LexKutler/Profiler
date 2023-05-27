@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-using ProfilerCQRS.Commands;
-using ProfilerWebAPI.MappingProfiles;
-using ProfilerModels.Abstractions;
-using ProfilerWebAPI.Mongo;
 using ProfilerBusiness;
+using ProfilerCQRS.Commands;
+using ProfilerIntegrations.Abstractions;
+using ProfilerWebAPI.MappingProfiles;
+using ProfilerWebAPI.Mongo;
+using System.Reflection;
 
 namespace TestsProfiler;
 

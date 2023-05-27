@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace TestsProfiler;
+
 /// <summary>
 /// This class is used to mock the UpdateResult class from MongoDB.Driver.
 /// It is created for 1 propose only: to test the UpdateProfileAsync method from ProfileService class.

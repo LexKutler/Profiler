@@ -3,9 +3,8 @@ using MediatR;
 using MongoDB.Bson;
 using Moq;
 using ProfilerBusiness;
-using ProfilerCQRS.Commands;
 using ProfilerCQRS.Queries;
-using ProfilerIntegration.Entities;
+using ProfilerIntegrations.Entities;
 
 namespace TestsProfiler.ProfilerServiceTests;
 
@@ -13,6 +12,7 @@ public class GetTests
 {
     private readonly IMapper _mapper;
     private readonly Mock<IMediator> _mediatrMock;
+
     public GetTests(IMapper mapper)
     {
         _mapper = mapper;

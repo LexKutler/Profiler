@@ -1,7 +1,7 @@
 ﻿using MongoDB.Driver;
-using ProfilerIntegration.Entities;
+using ProfilerIntegrations.Entities;
 
-namespace ProfilerModels.Abstractions;
+namespace ProfilerIntegrations.Abstractions;
 
 /// <summary>
 /// Service provide access for MongoDB client in use.

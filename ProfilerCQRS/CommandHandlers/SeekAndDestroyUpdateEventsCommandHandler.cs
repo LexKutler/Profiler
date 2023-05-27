@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using MongoDB.Driver;
 using ProfilerCQRS.Commands;
-using ProfilerIntegration.Entities;
-using ProfilerModels.Abstractions;
+using ProfilerIntegrations.Abstractions;
+using ProfilerIntegrations.Entities;
 
 namespace ProfilerCQRS.CommandHandlers;
 
-public class SeekAndDestroyUpdateEventsCommandHandler : 
+public class SeekAndDestroyUpdateEventsCommandHandler :
     IRequestHandler<SeekAndDestroyUpdateEventsCommand, List<ProfileUpdatedEvent>>
 {
     private readonly IMongoCollection<ProfileUpdatedEvent> _profileUpdatedEvents;

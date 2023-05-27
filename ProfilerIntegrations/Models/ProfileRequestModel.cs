@@ -1,13 +1,7 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿namespace ProfilerIntegrations.Models;
 
-namespace ProfilerIntegration.Entities;
-
-public class UserProfile
+public class ProfileRequestModel
 {
-    [BsonId]
-    public ObjectId Id { get; set; }
-
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
@@ -17,6 +11,4 @@ public class UserProfile
     public string State { get; set; }
     public int Zip { get; set; }
     public int CountryCode { get; set; }
-    public long? TimeStamp { get; set; }
-    public string? PicturePath { get; set; }
 }

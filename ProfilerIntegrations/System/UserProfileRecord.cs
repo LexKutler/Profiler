@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProfilerIntegration.System;
+﻿namespace ProfilerIntegrations.System;
 public record UserProfileRecord
 {
     public string FirstName { get; set; }

@@ -1,7 +1,6 @@
-﻿using ProfilerIntegration.Entities;
-using ProfilerIntegration.Models;
+﻿using ProfilerIntegrations.Models;
 
-namespace ProfilerIntegration.System;
+namespace ProfilerIntegrations.System;
 
 public class ProfileUpdateResult
 {

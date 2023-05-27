@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using ProfilerIntegration.Entities;
-using ProfilerIntegration.Models;
-using ProfilerIntegration.System;
+using ProfilerIntegrations.Entities;
+using ProfilerIntegrations.Models;
+using ProfilerIntegrations.System;
 
 namespace ProfilerWebAPI.MappingProfiles;
 

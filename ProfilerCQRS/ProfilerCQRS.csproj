@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProfilerModels\ProfilerIntegration.csproj" />
+    <ProjectReference Include="..\ProfilerIntegrations\ProfilerIntegrations.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace ProfilerIntegration.System;
+namespace ProfilerIntegrations.System;
 
 public class ErrorModel
 {

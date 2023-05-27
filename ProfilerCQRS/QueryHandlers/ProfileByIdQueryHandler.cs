@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MongoDB.Driver;
 using ProfilerCQRS.Queries;
-using ProfilerIntegration.Entities;
-using ProfilerModels.Abstractions;
+using ProfilerIntegrations.Abstractions;
+using ProfilerIntegrations.Entities;
 
 namespace ProfilerCQRS.QueryHandlers;
 

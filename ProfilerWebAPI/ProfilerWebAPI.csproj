@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ProfilerBusiness\ProfilerBusiness.csproj" />
     <ProjectReference Include="..\ProfilerCQRS\ProfilerCQRS.csproj" />
+    <ProjectReference Include="..\ProfilerIntegrations\ProfilerIntegrations.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
-﻿using ProfilerIntegration.Entities;
+﻿using ProfilerIntegrations.Entities;
 
-namespace ProfilerModels.Abstractions;
+namespace ProfilerIntegrations.Abstractions;
 
 /// <summary>
 /// Service is sending events to MQTT in fire-and-forget fashion

@@ -1,9 +1,7 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Hosting;
 using ProfilerCQRS.Commands;
-using ProfilerIntegration.Entities;
-using ProfilerModels.Abstractions;
-using Serilog;
+using ProfilerIntegrations.Abstractions;
+using ProfilerIntegrations.Entities;
 
 namespace ProfilerBusiness;
 
@@ -13,6 +11,7 @@ namespace ProfilerBusiness;
 public class MessageBroker : IMessageBroker
 {
     private readonly IMediator _mediator;
+
     public MessageBroker(IMediator mediator)
     {
         _mediator = mediator;

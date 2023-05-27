@@ -1,6 +1,5 @@
 ﻿using MediatR;
-using MongoDB.Bson;
-using ProfilerIntegration.Entities;
+using ProfilerIntegrations.Entities;
 
 namespace ProfilerCQRS.Queries;
 

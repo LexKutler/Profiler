@@ -6,8 +6,8 @@ using Moq;
 using ProfilerBusiness;
 using ProfilerCQRS.Commands;
 using ProfilerCQRS.Queries;
-using ProfilerIntegration.Entities;
-using ProfilerIntegration.System;
+using ProfilerIntegrations.Entities;
+using ProfilerIntegrations.System;
 
 namespace TestsProfiler.ProfilerServiceTests;
 
@@ -15,6 +15,7 @@ public class ProfilerServiceUpdateTests
 {
     private readonly IMapper _mapper;
     private readonly Mock<IMediator> _mediatrMock;
+
     public ProfilerServiceUpdateTests(IMapper mapper)
     {
         _mapper = mapper;
