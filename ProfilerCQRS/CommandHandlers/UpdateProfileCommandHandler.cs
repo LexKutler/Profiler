@@ -28,7 +28,9 @@ public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand,
         try
         {
             // Get the existing profile timestamp
-            var existingProfile = await _profiles.Find(x => x.Id == request.UserProfile.Id)
+            var existingProfile = await _profiles.Find(
+                    session,
+                    x => x.Id == request.UserProfile.Id)
                 .FirstOrDefaultAsync(cancellationToken);
 
             // Update configuration for the profile
