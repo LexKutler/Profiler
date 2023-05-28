@@ -3,7 +3,7 @@
 namespace ProfilerWebAPI.ProfileIO;
 
 /// <summary>
-/// This class is exclusively for file validation via <see cref="FileSize"/> and <see cref="AllowedExtensions"/> attributes
+/// This class is exclusively for file validation via <see cref="FileSizeAttribute"/> and <see cref="AllowedExtensionsAttribute"/> attributes
 /// </summary>
 public class ProfileImageRequest
 {
