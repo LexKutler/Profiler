@@ -48,6 +48,20 @@ public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand,
                     request.UserProfile.PicturePath ?? existingProfile.PicturePath)
                 .Set(profile => profile.TimeStamp, DateTime.UtcNow.Ticks);
 
+            // Insert update event
+            var profileUpdatedEvent = new ProfileUpdatedEvent
+            {
+                Id = existingProfile.Id,
+                UserProfileBefore = existingProfile,
+                UserProfileAfter = request.UserProfile,
+                EventHappened = DateTime.UtcNow.Ticks
+            };
+
+            await _profileUpdatedEvents.InsertOneAsync(
+                session,
+                profileUpdatedEvent,
+                cancellationToken: cancellationToken);
+
             // Update profile with filtering by timestamp i.e. implement optimistic locking
             // If timestamp is not matched, then it means that profile was updated by another request
             updateResult = await _profiles.UpdateOneAsync(
@@ -59,20 +73,7 @@ public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand,
 
             if (updateResult.ModifiedCount == 1)
             {
-                var profileUpdatedEvent = new ProfileUpdatedEvent
-                {
-                    Id = existingProfile.Id,
-                    UserProfileBefore = existingProfile,
-                    UserProfileAfter = request.UserProfile,
-                    EventHappened = DateTime.UtcNow.Ticks
-                };
-
-                await _profileUpdatedEvents.InsertOneAsync(
-                    session,
-                    profileUpdatedEvent,
-                    cancellationToken: cancellationToken);
-
-                // At this point, profile is updated and event is saved
+                // At this point, event is saved and profile is updated
                 // So it's safe to commit the transaction
                 await session.CommitTransactionAsync(cancellationToken: cancellationToken);
             }
