@@ -11,12 +11,12 @@ using ProfilerIntegrations.System;
 
 namespace TestsProfiler.ProfilerServiceTests;
 
-public class ProfilerServiceUpdateTests
+public class UpdateTests
 {
     private readonly IMapper _mapper;
     private readonly Mock<IMediator> _mediatrMock;
 
-    public ProfilerServiceUpdateTests(IMapper mapper)
+    public UpdateTests(IMapper mapper)
     {
         _mapper = mapper;
         _mediatrMock = new Mock<IMediator>();

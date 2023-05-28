@@ -1,6 +1,4 @@
-﻿using MongoDB.Bson;
-
-namespace ProfilerWebAPI.ProfileIO;
+﻿namespace ProfilerWebAPI.ProfileIO;
 
 /// <summary>
 /// This class is exclusively for file validation via <see cref="FileSizeAttribute"/> and <see cref="AllowedExtensionsAttribute"/> attributes
