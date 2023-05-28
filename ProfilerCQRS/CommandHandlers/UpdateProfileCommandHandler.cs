@@ -33,13 +33,18 @@ public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand,
 
             // Update configuration for the profile
             var updateConfig = Builders<UserProfile>.Update
+                .Set(profile => profile.FirstName, request.UserProfile.FirstName)
+                .Set(profile => profile.LastName, request.UserProfile.LastName)
+                .Set(profile => profile.Email, request.UserProfile.Email)
+                .Set(profile => profile.UserName, request.UserProfile.UserName)
+                .Set(profile => profile.Address, request.UserProfile.Address)
+                .Set(profile => profile.City, request.UserProfile.City)
+                .Set(profile => profile.State, request.UserProfile.State)
+                .Set(profile => profile.Zip, request.UserProfile.Zip)
+                .Set(profile => profile.CountryCode, request.UserProfile.CountryCode)
+                .Set(profile => profile.PicturePath,
+                    request.UserProfile.PicturePath ?? existingProfile.PicturePath)
                 .Set(profile => profile.TimeStamp, DateTime.UtcNow.Ticks);
-
-            foreach (var property in typeof(UserProfile).GetProperties())
-            {
-                var value = property.GetValue(request.UserProfile);
-                updateConfig = updateConfig.Set(property.Name, value);
-            }
 
             // Update profile with filtering by timestamp i.e. implement optimistic locking
             // If timestamp is not matched, then it means that profile was updated by another request

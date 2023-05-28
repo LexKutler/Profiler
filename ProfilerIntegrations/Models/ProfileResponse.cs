@@ -1,5 +1,10 @@
-﻿namespace ProfilerIntegrations.Models;
+﻿using ProfilerIntegrations.Entities;
 
+namespace ProfilerIntegrations.Models;
+
+/// <summary>
+/// Safe representation of <see cref="UserProfile"/> for exposure to end-user
+/// </summary>
 public class ProfileResponse
 {
     public string Id { get; set; }
