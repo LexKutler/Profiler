@@ -1,5 +1,5 @@
 # Profiler
-Profiler is 3-layer microservice which allows to save user profile in MongoDB cluster, update it and upload a profile picture. Check [wiki](https://github.com/LexKutler/Profiler/wiki/About) for walkthrough
+Profiler is 3-layer microservice which allows to save user profile in MongoDB cluster, update it and upload a profile picture. Check [wiki](https://github.com/LexKutler/Profiler/wiki) for walkthrough
 
 ### Setup
 1. Change [connection string](https://github.com/LexKutler/Profiler/blob/538f6daac69e12993f79c7204f1bbb309e9b2af7/ProfilerWebAPI/appsettings.json#LL10C6-L10C22) from `blank` to anything meaningful
