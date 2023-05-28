@@ -5,6 +5,7 @@ using ProfilerIntegrations.Abstractions;
 using ProfilerIntegrations.Entities;
 using ProfilerIntegrations.Models;
 using ProfilerIntegrations.System;
+using ProfilerWebAPI.ProfileIO;
 
 namespace ProfilerWebAPI.Controllers
 {
@@ -103,7 +104,7 @@ namespace ProfilerWebAPI.Controllers
         [HttpPost("{profileId}/picture")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestObjectResult), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UploadUserPicture([FromRoute] string profileId, [FromForm] IFormFile picture)
+        public async Task<IActionResult> UploadUserPicture([FromRoute] string profileId, [FromForm] ProfileImageRequest requestFile)
         {
             if (!ModelState.IsValid)
             {
@@ -124,9 +125,10 @@ namespace ProfilerWebAPI.Controllers
                 return NotFound("Profile not found");
             }
 
-            if (picture.Length <= 0) return BadRequest("Image is empty");
+            if (requestFile.Image.Length <= 0) return BadRequest("Image is empty");
 
-            var newFileName = ObjectId.GenerateNewId() + Path.GetExtension(picture.FileName);
+            // Request filename should be considered as untrusted, so we simply create new
+            var newFileName = ObjectId.GenerateNewId() + Path.GetExtension(requestFile.Image.FileName);
             var filePath = Path.Combine(
                 _targetPicturesPath,
                 newFileName);
@@ -137,7 +139,7 @@ namespace ProfilerWebAPI.Controllers
             }
 
             await using var stream = System.IO.File.Create(filePath);
-            await picture.CopyToAsync(stream);
+            await requestFile.Image.CopyToAsync(stream);
 
             // If file is saved, first remove previous picture
             if (!string.IsNullOrEmpty(profile.PicturePath))

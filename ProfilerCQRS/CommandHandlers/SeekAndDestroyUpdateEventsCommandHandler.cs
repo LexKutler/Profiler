@@ -37,7 +37,7 @@ public class SeekAndDestroyUpdateEventsCommandHandler :
         {
             // Get all event at this point in time
             var existingEvents = await _profileUpdatedEvents
-                .Find(Builders<ProfileUpdatedEvent>.Filter.Empty)
+                .Find(session, Builders<ProfileUpdatedEvent>.Filter.Empty)
                 .ToListAsync(cancellationToken: cancellationToken);
 
             // This move has a potential to save some time under higher loads
@@ -45,6 +45,7 @@ public class SeekAndDestroyUpdateEventsCommandHandler :
 
             // Delete each one of them
             await _profileUpdatedEvents.DeleteManyAsync(
+                session,
                 profileUpdatedEvent => existingEventsHashSet.Contains(profileUpdatedEvent),
                 cancellationToken: cancellationToken);
 

@@ -14,12 +14,9 @@ public class MongoDBService : IMongoDBService
     public MongoClient MongoClient { get; }
     public IMongoCollection<UserProfile> Profiles { get; }
     public IMongoCollection<ProfileUpdatedEvent> ProfileUpdatedEvents { get; }
-    private readonly IMessageBroker _broker;
 
-    public MongoDBService(IOptions<DatabaseSettings> databaseSettings, IMessageBroker broker)
+    public MongoDBService(IOptions<DatabaseSettings> databaseSettings)
     {
-        _broker = broker;
-
         var mongoClient = new MongoClient(databaseSettings.Value.ConnectionString);
         var database = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);
 

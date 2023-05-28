@@ -2,6 +2,9 @@
 
 namespace ProfilerIntegrations.System;
 
+/// <summary>
+/// Error model to output from error handler
+/// </summary>
 public class ErrorModel
 {
     public int StatusCode { get; set; }

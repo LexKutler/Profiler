@@ -1,4 +1,10 @@
-﻿namespace ProfilerIntegrations.System;
+﻿using ProfilerIntegrations.Entities;
+
+namespace ProfilerIntegrations.System;
+
+/// <summary>
+/// Meant to be used to compare <see cref="UserProfile"/> instances
+/// </summary>
 public record UserProfileRecord
 {
     public string FirstName { get; set; }
